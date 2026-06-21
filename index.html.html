@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maison · Moda de Luxo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --noir: #1A1815;
+    --dore: #C9A96E;
+    --dore-light: #E8D9BC;
+    --creme: #FAF9F7;
+    --stone: #E8E3DC;
+    --stone-mid: #D0C9BF;
+    --muted: #9C948C;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Jost', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--creme);
+    color: var(--noir);
+    font-family: var(--sans);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+    transition: background 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(250,249,247,0.94);
+    backdrop-filter: blur(8px);
+    padding: 18px 60px;
+    border-bottom: 0.5px solid var(--stone);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--noir);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--noir); }
+  .nav-right {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #1a1815 0%, #2c2a26 100%);
+    z-index: 0;
+  }
+  .hero-texture {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.015) 2px,
+      rgba(255,255,255,0.015) 4px
+    );
+    z-index: 1;
+  }
+  .hero-left-content { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--dore);
+    margin-bottom: 32px;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(52px, 6vw, 80px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    color: var(--creme);
+    margin-bottom: 32px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--dore-light);
+  }
+  .hero-line {
+    width: 40px;
+    height: 0.5px;
+    background: var(--dore);
+    margin-bottom: 28px;
+  }
+  .hero-sub {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(250,249,247,0.55);
+    max-width: 340px;
+    margin-bottom: 52px;
+  }
+  .btn-primary {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    border: 0.5px solid var(--dore);
+    color: var(--dore);
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--dore);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .btn-primary:hover::before { transform: scaleX(1); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-primary:hover span { color: var(--noir); }
+  .hero-right {
+    background: var(--stone);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-img-placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #d4cec5 0%, #bdb5aa 50%, #c8c0b4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-img-label {
+    font-family: var(--serif);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(26,24,21,0.3);
+    text-align: center;
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 48px;
+    right: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: float 3s ease-in-out infinite;
+  }
+  .hero-scroll span {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+  }
+  .scroll-line {
+    width: 0.5px;
+    height: 48px;
+    background: var(--stone-mid);
+    animation: grow 3s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+  @keyframes grow { 0%,100%{transform:scaleY(0.6);opacity:0.4} 50%{transform:scaleY(1);opacity:1} }
+
+  /* ── SECTION BASE ── */
+  section { padding: 120px 60px; }
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--dore);
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4vw, 54px);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: 0.02em;
+    color: var(--noir);
+  }
+  .section-title em { font-style: italic; }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy {
+    background: var(--creme);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .philosophy-body { padding-top: 12px; }
+  .philosophy-text {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--noir);
+    margin-bottom: 40px;
+  }
+  .philosophy-detail {
+    font-size: 13px;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 540px;
+  }
+  .philosophy-stats {
+    display: flex;
+    gap: 60px;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 0.5px solid var(--stone);
+  }
+  .stat-number {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--noir);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── COLLECTION ── */
+  .collection { background: var(--noir); }
+  .collection .section-title { color: var(--creme); }
+  .collection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 64px;
+  }
+  .collection-intro {
+    font-size: 13px;
+    color: rgba(250,249,247,0.45);
+    max-width: 320px;
+    line-height: 1.8;
+    margin-top: 20px;
+  }
+  .btn-ghost {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dore);
+    text-decoration: none;
+    border-bottom: 0.5px solid var(--dore);
+    padding-bottom: 4px;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+    align-self: flex-end;
+  }
+  .btn-ghost:hover { opacity: 0.65; }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .product-card { position: relative; cursor: pointer; overflow: hidden; }
+  .product-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--stone-mid);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.7s ease;
+  }
+  .product-card:hover .product-img { transform: scale(1.04); }
+  .product-img-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .product-img-label {
+    font-family: var(--serif);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(26,24,21,0.3);
+  }
+  .product-card:nth-child(1) .product-img { background: linear-gradient(160deg, #c8c2b8 0%, #b0a99e 100%); }
+  .product-card:nth-child(2) .product-img { background: linear-gradient(160deg, #2c2a26 0%, #1a1815 100%); }
+  .product-card:nth-child(2) .product-img-label { color: rgba(250,249,247,0.25); }
+  .product-card:nth-child(3) .product-img { background: linear-gradient(160deg, #d8cfc4 0%, #c0b5a8 100%); }
+  .product-info {
+    padding: 24px 0 12px;
+    background: var(--noir);
+  }
+  .product-name {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--creme);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+  .product-category {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .product-price {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--dore);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── CRAFT ── */
+  .craft {
+    background: var(--stone);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+  }
+  .craft-visual {
+    background: linear-gradient(135deg, #d0c9bf 0%, #bdb5aa 100%);
+    min-height: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .craft-visual-label {
+    font-family: var(--serif);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(26,24,21,0.25);
+  }
+  .craft-content {
+    padding: 100px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .craft-text {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #6b6560;
+    margin-top: 32px;
+    margin-bottom: 40px;
+  }
+  .craft-features { list-style: none; }
+  .craft-features li {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 0.5px solid var(--stone-mid);
+    font-size: 13px;
+    color: var(--noir);
+    align-items: flex-start;
+  }
+  .craft-features li:first-child { border-top: 0.5px solid var(--stone-mid); }
+  .craft-num {
+    font-family: var(--serif);
+    font-size: 11px;
+    color: var(--dore);
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+    min-width: 24px;
+  }
+
+  /* ── TESTIMONIAL ── */
+  .testimonial {
+    background: var(--creme);
+    text-align: center;
+    padding: 140px 60px;
+  }
+  .testimonial-quote {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: var(--noir);
+    max-width: 780px;
+    margin: 0 auto 48px;
+  }
+  .testimonial-quote em { font-style: italic; color: var(--dore); }
+  .testimonial-divider {
+    width: 40px;
+    height: 0.5px;
+    background: var(--dore);
+    margin: 0 auto 28px;
+  }
+  .testimonial-author {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── CTA FINAL ── */
+  .cta-section {
+    background: var(--noir);
+    text-align: center;
+    padding: 140px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-section .section-title { color: var(--creme); margin-bottom: 24px; }
+  .cta-sub {
+    font-size: 14px;
+    color: rgba(250,249,247,0.45);
+    margin-bottom: 52px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+  }
+  .cta-buttons { display: flex; gap: 24px; justify-content: center; align-items: center; }
+  .btn-light {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 14px 40px;
+    background: var(--dore);
+    color: var(--noir);
+    text-decoration: none;
+    font-weight: 400;
+    transition: opacity 0.2s;
+  }
+  .btn-light:hover { opacity: 0.85; }
+  .btn-outline-light {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(250,249,247,0.45);
+    text-decoration: none;
+    border-bottom: 0.5px solid rgba(250,249,247,0.25);
+    padding-bottom: 3px;
+    transition: color 0.2s;
+  }
+  .btn-outline-light:hover { color: var(--creme); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--noir);
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    padding: 60px 60px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+  .footer-brand {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--creme);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .footer-tagline {
+    font-size: 12px;
+    line-height: 1.8;
+    color: rgba(250,249,247,0.35);
+    max-width: 240px;
+  }
+  .footer-col-title {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dore);
+    margin-bottom: 24px;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 14px; }
+  .footer-links a {
+    font-size: 12px;
+    color: rgba(250,249,247,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .footer-links a:hover { color: var(--creme); }
+  .footer-bottom {
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 10px;
+    color: rgba(250,249,247,0.25);
+    letter-spacing: 0.1em;
+  }
+  .footer-legal {
+    display: flex;
+    gap: 32px;
+  }
+  .footer-legal a {
+    font-size: 10px;
+    color: rgba(250,249,247,0.25);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  .footer-legal a:hover { color: rgba(250,249,247,0.55); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    nav { padding: 22px 28px; }
+    nav.scrolled { padding: 16px 28px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 100px 28px 60px; min-height: 100vh; }
+    .hero-right { display: none; }
+    section { padding: 80px 28px; }
+    .philosophy { grid-template-columns: 1fr; gap: 40px; }
+    .philosophy-stats { flex-wrap: wrap; gap: 32px; }
+    .products-grid { grid-template-columns: 1fr; gap: 2px; }
+    .craft { grid-template-columns: 1fr; }
+    .craft-visual { min-height: 300px; }
+    .craft-content { padding: 60px 28px; }
+    .collection-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    .cta-buttons { flex-direction: column; }
+  }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .scroll-line, .hero-scroll { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Maison ·</a>
+  <ul class="nav-links">
+    <li><a href="#colecao">Coleção</a></li>
+    <li><a href="#atelie">Ateliê</a></li>
+    <li><a href="#editorial">Editorial</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <div class="nav-right">Ateliê Privado</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-left">
+    <div class="hero-texture"></div>
+    <div class="hero-left-content">
+      <p class="hero-eyebrow">Coleção Outono — Inverno 2025</p>
+      <h1 class="hero-title">A Arte<br>do <em>Invisível</em></h1>
+      <div class="hero-line"></div>
+      <p class="hero-sub">Peças que existem além da tendência. Feitas para durar mais do que estações, para quem já não precisa provar nada.</p>
+      <a href="#colecao" class="btn-primary"><span>Explorar a coleção</span></a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-placeholder">
+      <div class="hero-img-label">Imagem<br>da campanha</div>
+    </div>
+    <div class="hero-scroll">
+      <span>Descer</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="atelie">
+  <div class="philosophy-left">
+    <p class="section-label reveal">Filosofia</p>
+    <h2 class="section-title reveal">Feito<br>com <em>intenção</em></h2>
+  </div>
+  <div class="philosophy-body">
+    <p class="philosophy-text reveal">Cada peça nasce de uma atenção quase obstinada ao detalhe — o corte, o caimento, o silêncio entre uma costura e outra.</p>
+    <p class="philosophy-detail reveal">Trabalhamos com fornecedores que compartilham nossa obsessão por materiais extraordinários. Tecidos que melhoram com o tempo, aviamentos que resistem ao uso diário, acabamentos que permanecerão impecáveis por décadas. Não produzimos coleções sazonais para serem descartadas — produzimos peças para serem herdadas.</p>
+    <div class="philosophy-stats reveal">
+      <div>
+        <div class="stat-number">12</div>
+        <div class="stat-label">Peças por coleção</div>
+      </div>
+      <div>
+        <div class="stat-number">48h</div>
+        <div class="stat-label">De trabalho por peça</div>
+      </div>
+      <div>
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Feito à mão</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section class="collection" id="colecao" style="padding-top:100px; padding-bottom:100px;">
+  <div class="collection-header reveal">
+    <div>
+      <p class="section-label">Coleção atual</p>
+      <h2 class="section-title" style="color:var(--creme);">Nuit Calme</h2>
+      <p class="collection-intro">Doze peças construídas em torno da ideia de que elegância verdadeira nunca anuncia a si mesma.</p>
+    </div>
+    <a href="#" class="btn-ghost">Ver todas as peças</a>
+  </div>
+  <div class="products-grid reveal">
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-inner"><span class="product-img-label">Foto do produto</span></div>
+      </div>
+      <div class="product-info">
+        <p class="product-category">Sobretudo</p>
+        <p class="product-name">Casaco Nuit</p>
+        <p class="product-price">R$ 8.400</p>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-inner"><span class="product-img-label" style="color:rgba(250,249,247,0.2);">Foto do produto</span></div>
+      </div>
+      <div class="product-info">
+        <p class="product-category">Alfaiataria</p>
+        <p class="product-name">Blazer Calme</p>
+        <p class="product-price">R$ 5.900</p>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-inner"><span class="product-img-label">Foto do produto</span></div>
+      </div>
+      <div class="product-info">
+        <p class="product-category">Alta-costura</p>
+        <p class="product-name">Vestido Soir</p>
+        <p class="product-price">R$ 7.200</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CRAFT -->
+<section class="craft" style="padding:0;" id="processo">
+  <div class="craft-visual">
+    <span class="craft-visual-label">Ateliê</span>
+  </div>
+  <div class="craft-content">
+    <p class="section-label reveal">Processo</p>
+    <h2 class="section-title reveal">O que não<br>se <em>vê</em></h2>
+    <p class="craft-text reveal">O luxo verdadeiro é invisível. Está na entretela, no acabamento interno, na escolha do fio que nunca aparecerá numa foto — mas que a pessoa que veste sente a cada movimento.</p>
+    <ul class="craft-features">
+      <li class="reveal"><span class="craft-num">I</span><span>Tecidos selecionados diretamente em casas têxteis da Itália e França, com audição prévia de cada lote.</span></li>
+      <li class="reveal"><span class="craft-num">II</span><span>Cada peça é costurada manualmente por uma única artesã, do início ao acabamento final.</span></li>
+      <li class="reveal"><span class="craft-num">III</span><span>Entregamos com certificado de autenticidade e relatório do material utilizado.</span></li>
+      <li class="reveal"><span class="craft-num">IV</span><span>Garantia vitalícia de ajustes e reparos para todas as peças da coleção.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial">
+  <blockquote class="testimonial-quote reveal">
+    "Visto a Maison quando preciso que a roupa <em>trabalhe por mim</em> — quando não posso perder tempo pensando no que estou usando."
+  </blockquote>
+  <div class="testimonial-divider reveal"></div>
+  <p class="testimonial-author reveal">Ana Lúcia M. · Diretora Executiva, São Paulo</p>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contato" style="padding-top:120px; padding-bottom:120px;">
+  <p class="section-label reveal">Acesso privado</p>
+  <h2 class="section-title reveal">Faça parte do<br><em>círculo</em></h2>
+  <p class="cta-sub reveal">Nossa lista é pequena e intencional. Novidades, acesso antecipado e atendimento personalizado para quem prefere a curadoria ao volume.</p>
+  <div class="cta-buttons reveal">
+    <a href="mailto:atelie@maison.com.br" class="btn-light">Solicitar acesso</a>
+    <a href="#colecao" class="btn-outline-light">Ver a coleção</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Maison ·</div>
+      <p class="footer-tagline">Moda de luxo silencioso. Peças construídas para durar décadas — não estações.</p>
+    </div>
+    <div>
+      <p class="footer-col-title">Coleção</p>
+      <ul class="footer-links">
+        <li><a href="#">Nuit Calme</a></li>
+        <li><a href="#">Alta-costura</a></li>
+        <li><a href="#">Alfaiataria</a></li>
+        <li><a href="#">Edições únicas</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Ateliê</p>
+      <ul class="footer-links">
+        <li><a href="#">Nossa filosofia</a></li>
+        <li><a href="#">Processo</a></li>
+        <li><a href="#">Materiais</a></li>
+        <li><a href="#">Artesãs</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Contato</p>
+      <ul class="footer-links">
+        <li><a href="#">Atendimento</a></li>
+        <li><a href="#">Encomendas</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Maison · Todos os direitos reservados</span>
+    <div class="footer-legal">
+      <a href="#">Privacidade</a>
+      <a href="#">Termos</a>
+      <a href="#">Trocas</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
